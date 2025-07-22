@@ -335,73 +335,6 @@ const RegistrationPage = () => {
               )}
             </div>
 
-            <div>
-              <label htmlFor="avatar" className="block text-sm font-semibold text-gray-700 mb-1 sm:mb-2">
-                Profile Picture (Optional)
-              </label>
-              <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-                {/* Avatar Preview */}
-                <div className="flex-shrink-0">
-                  <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden bg-gray-100 border-2 border-gray-200 flex items-center justify-center">
-                    {avatarPreview ? (
-                      <img 
-                        src={avatarPreview} 
-                        alt="Avatar preview" 
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <Image className="h-8 w-8 text-gray-400" />
-                    )}
-                  </div>
-                </div>
-
-                {/* Upload Controls */}
-                <div className="flex-1">
-                  <div className="relative">
-                    <input
-                      type="file"
-                      id="avatar"
-                      ref={fileInputRef}
-                      accept="image/*"
-                      onChange={handleAvatarChange}
-                      className="hidden"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => fileInputRef.current?.click()}
-                      className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-medium py-2 sm:py-3 px-4 rounded-lg sm:rounded-xl shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center"
-                    >
-                      <Upload className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
-                      {avatarFile ? 'Change Image' : 'Upload Image'}
-                    </button>
-                    <p className="mt-1 text-xs text-gray-500">
-                      JPG, PNG or GIF. Max size 5MB.
-                    </p>
-                  </div>
-
-                  {/* Upload Progress */}
-                  {isUploading && (
-                    <div className="mt-2">
-                      <div className="w-full bg-gray-200 rounded-full h-2.5">
-                        <div 
-                          className="bg-green-600 h-2.5 rounded-full" 
-                          style={{ width: `${uploadProgress}%` }}
-                        ></div>
-                      </div>
-                      <p className="text-xs text-gray-500 mt-1">Uploading: {uploadProgress}%</p>
-                    </div>
-                  )}
-
-                  {/* Error Message */}
-                  {uploadError && (
-                    <p className="mt-1 text-xs text-red-600 flex items-center">
-                      <AlertCircle className="h-3 w-3 mr-1" />
-                      {uploadError}
-                    </p>
-                  )}
-                </div>
-              </div>
-            </div>
 
             <div className="border-t border-gray-200 pt-4 sm:pt-6 mt-4 sm:mt-6">
               <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-3 sm:mb-4 flex items-center">
@@ -527,3 +460,75 @@ const RegistrationPage = () => {
 };
 
 export default RegistrationPage;
+
+
+
+
+
+// <div>
+//   <label htmlFor="avatar" className="block text-sm font-semibold text-gray-700 mb-1 sm:mb-2">
+//     Profile Picture (Optional)
+//   </label>
+//   <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+//     {/* Avatar Preview */}
+//     <div className="flex-shrink-0">
+//       <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden bg-gray-100 border-2 border-gray-200 flex items-center justify-center">
+//         {avatarPreview ? (
+//             <img
+//                 src={avatarPreview}
+//                 alt="Avatar preview"
+//                 className="w-full h-full object-cover"
+//             />
+//         ) : (
+//             <Image className="h-8 w-8 text-gray-400" />
+//         )}
+//       </div>
+//     </div>
+//
+//     {/* Upload Controls */}
+//     <div className="flex-1">
+//       <div className="relative">
+//         <input
+//             type="file"
+//             id="avatar"
+//             ref={fileInputRef}
+//             accept="image/*"
+//             onChange={handleAvatarChange}
+//             className="hidden"
+//         />
+//         <button
+//             type="button"
+//             onClick={() => fileInputRef.current?.click()}
+//             className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-medium py-2 sm:py-3 px-4 rounded-lg sm:rounded-xl shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center"
+//         >
+//           <Upload className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
+//           {avatarFile ? 'Change Image' : 'Upload Image'}
+//         </button>
+//         <p className="mt-1 text-xs text-gray-500">
+//           JPG, PNG or GIF. Max size 5MB.
+//         </p>
+//       </div>
+//
+//       {/* Upload Progress */}
+//       {isUploading && (
+//           <div className="mt-2">
+//             <div className="w-full bg-gray-200 rounded-full h-2.5">
+//               <div
+//                   className="bg-green-600 h-2.5 rounded-full"
+//                   style={{ width: `${uploadProgress}%` }}
+//               ></div>
+//             </div>
+//             <p className="text-xs text-gray-500 mt-1">Uploading: {uploadProgress}%</p>
+//           </div>
+//       )}
+//
+//       {/* Error Message */}
+//       {uploadError && (
+//           <p className="mt-1 text-xs text-red-600 flex items-center">
+//             <AlertCircle className="h-3 w-3 mr-1" />
+//             {uploadError}
+//           </p>
+//       )}
+//     </div>
+//   </div>
+// </div>
