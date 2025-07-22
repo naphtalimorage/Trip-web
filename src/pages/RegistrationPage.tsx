@@ -5,7 +5,7 @@ import * as yup from 'yup';
 import { UserPlus, CheckCircle, AlertCircle, DollarSign, Clock } from 'lucide-react';
 import { participantService } from '../services/participantService';
 import { RegistrationFormData } from '../types';
-import { isSupabaseConfigured, supabase } from '../lib/supabase';
+import { isSupabaseConfigured } from '../lib/supabase';
 
 // Form validation schema
 const schema = yup.object({
@@ -22,11 +22,11 @@ const RegistrationPage = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
-  const [avatarFile, setAvatarFile] = useState<File | null>(null);
+  // const [avatarFile, setAvatarFile] = useState<File | null>(null);
   // const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
   // const [isUploading, setIsUploading] = useState(false);
   // const [uploadProgress, setUploadProgress] = useState(0);
-  const [uploadError, setUploadError] = useState<string | null>(null);
+  // const [uploadError, setUploadError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,48 +65,48 @@ const RegistrationPage = () => {
    * 
    * @returns The public URL of the uploaded avatar, or null if upload failed
    */
-  const uploadAvatar = async (): Promise<string | null> => {
-    if (!avatarFile || !isSupabaseConfigured()) return null;
-
-    try {
-      // setIsUploading(true);
-      // setUploadProgress(0);
-
-      // Create a unique filename
-      const fileExt = avatarFile.name.split('.').pop();
-      const fileName = `${Date.now()}-${Math.random().toString(36).substring(2, 15)}.${fileExt}`;
-      const filePath = `avatars/${fileName}`;
-
-      // // Upload to Supabase Storage
-      // const { error } = await supabase.storage
-      //   .from('participant-avatars')
-      //   .upload(filePath, avatarFile, {
-      //     cacheControl: '3600',
-      //     upsert: false,
-      //     onUploadProgress: (progress) => {
-      //       const percent = Math.round((progress.loaded / progress.total) * 100);
-      //       setUploadProgress(percent);
-      //     },
-      //   });
-      // //
-      // if (error) {
-      //   throw error;
-      // }
-
-      // Get public URL
-      const { data: { publicUrl } } = supabase.storage
-        .from('participant-avatars')
-        .getPublicUrl(filePath);
-
-      return publicUrl;
-    } catch (error) {
-      console.error('Error uploading avatar:', error);
-      setUploadError('Failed to upload avatar. Please try again.');
-      return null;
-    } finally {
-      // setIsUploading(false);
-    }
-  };
+  // const uploadAvatar = async (): Promise<string | null> => {
+  //   if (!avatarFile || !isSupabaseConfigured()) return null;
+  //
+  //   try {
+  //     // setIsUploading(true);
+  //     // setUploadProgress(0);
+  //
+  //     // Create a unique filename
+  //     const fileExt = avatarFile.name.split('.').pop();
+  //     const fileName = `${Date.now()}-${Math.random().toString(36).substring(2, 15)}.${fileExt}`;
+  //     const filePath = `avatars/${fileName}`;
+  //
+  //     // // Upload to Supabase Storage
+  //     // const { error } = await supabase.storage
+  //     //   .from('participant-avatars')
+  //     //   .upload(filePath, avatarFile, {
+  //     //     cacheControl: '3600',
+  //     //     upsert: false,
+  //     //     onUploadProgress: (progress) => {
+  //     //       const percent = Math.round((progress.loaded / progress.total) * 100);
+  //     //       setUploadProgress(percent);
+  //     //     },
+  //     //   });
+  //     // //
+  //     // if (error) {
+  //     //   throw error;
+  //     // }
+  //
+  //     // Get public URL
+  //     const { data: { publicUrl } } = supabase.storage
+  //       .from('participant-avatars')
+  //       .getPublicUrl(filePath);
+  //
+  //     return publicUrl;
+  //   } catch (error) {
+  //     console.error('Error uploading avatar:', error);
+  //     setUploadError('Failed to upload avatar. Please try again.');
+  //     return null;
+  //   } finally {
+  //     // setIsUploading(false);
+  //   }
+  // };
 
   const {
     register,
@@ -133,26 +133,26 @@ const RegistrationPage = () => {
     setIsSubmitting(true);
     setSubmitError(null);
 
-    try {
-      // Upload avatar if one is selected, or generate one if not
-      let avatarUrl = null;
-      if (avatarFile) {
-        avatarUrl = await uploadAvatar();
-        if (!avatarUrl && uploadError) {
-          setSubmitError(uploadError);
-          setIsSubmitting(false);
-          return;
-        }
-      } else {
-        // Generate an avatar using UI Avatars API
-        avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(data.full_name)}&background=random&color=fff&size=128`;
-      }
+     try {
+    //   // Upload avatar if one is selected, or generate one if not
+    //   let avatarUrl = null;
+    //   if (avatarFile) {
+    //     avatarUrl = await uploadAvatar();
+    //     if (!avatarUrl && uploadError) {
+    //       setSubmitError(uploadError);
+    //       setIsSubmitting(false);
+    //       return;
+    //     }
+    //   } else {
+    //     // Generate an avatar using UI Avatars API
+    //     avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(data.full_name)}&background=random&color=fff&size=128`;
+    //   }
 
       // Ensure amount_paid is 0 when payment_status is 'pending'
       const formData = {
         ...data,
         amount_paid: data.payment_status === 'pending' ? 0 : data.amount_paid,
-        avatar_url: avatarUrl
+        // avatar_url: avatarUrl
       };
 
       const result = await participantService.registerParticipant(formData);
@@ -161,7 +161,7 @@ const RegistrationPage = () => {
         setIsSubmitted(true);
         reset();
         // Reset avatar state
-        setAvatarFile(null);
+        // setAvatarFile(null);
         // setAvatarPreview(null);
         // setUploadProgress(0);
         if (fileInputRef.current) {
