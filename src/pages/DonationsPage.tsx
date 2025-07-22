@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Gift, Plus, AlertCircle, Package, Users } from 'lucide-react';
 import { participantService } from '../services/participantService';
 import { Donation, Participant } from '../types';
@@ -30,6 +30,7 @@ const DonationsPage = () => {
         setDonations(donationsData);
         setParticipants(participantsData);
       } catch (err) {
+        console.error('Error loading data:', err);
         setError('Failed to load data');
       } finally {
         setLoading(false);

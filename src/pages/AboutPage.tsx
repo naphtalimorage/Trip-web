@@ -1,4 +1,3 @@
-import React from 'react';
 import { MapPin, Camera, Mountain, Trees } from 'lucide-react';
 
 const AboutPage = () => {

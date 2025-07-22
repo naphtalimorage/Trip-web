@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Users, Calendar, MapPin, AlertCircle, CheckCircle, Clock, DollarSign, Upload, Image, Edit, X } from 'lucide-react';
 import { participantService } from '../services/participantService';
 import { Participant } from '../types';
@@ -34,6 +34,7 @@ const ParticipantsPage = () => {
         const data = await participantService.getParticipants();
         setParticipants(data);
       } catch (err) {
+        console.error('Error loading participants:', err);
         setError('Failed to load participants');
       } finally {
         setLoading(false);
@@ -52,7 +53,7 @@ const ParticipantsPage = () => {
             schema: 'public', 
             table: 'participants' 
           }, 
-          async (payload) => {
+          async () => {
             // Refresh the entire list when any change occurs
             try {
               const data = await participantService.getParticipants();
@@ -139,7 +140,7 @@ const ParticipantsPage = () => {
       const filePath = `avatars/${fileName}`;
 
       // Upload to Supabase Storage
-      const { data, error } = await supabase.storage
+      const { error } = await supabase.storage
         .from('participant-avatars')
         .upload(filePath, avatarFile, {
           cacheControl: '3600',
@@ -350,7 +351,7 @@ const ParticipantsPage = () => {
                                 src={participant.avatar_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(participant.full_name)}&background=random&color=fff&size=40`} 
                                 alt={`${participant.full_name}'s avatar`}
                                 className="w-10 h-10 rounded-full mr-3 border-2 border-gray-200 object-cover"
-                                onLoad={(e) => {
+                                onLoad={() => {
                                   // If the participant doesn't have an avatar_url, save the generated one
                                   if (!participant.avatar_url) {
                                     const generatedAvatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(participant.full_name)}&background=random&color=fff&size=40`;
