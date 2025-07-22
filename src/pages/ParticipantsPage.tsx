@@ -140,20 +140,20 @@ const ParticipantsPage = () => {
       const filePath = `avatars/${fileName}`;
 
       // Upload to Supabase Storage
-      const { error } = await supabase.storage
-        .from('participant-avatars')
-        .upload(filePath, avatarFile, {
-          cacheControl: '3600',
-          upsert: false,
-          onUploadProgress: (progress) => {
-            const percent = Math.round((progress.loaded / progress.total) * 100);
-            setUploadProgress(percent);
-          },
-        });
+      // const { error } = await supabase.storage
+      //   .from('participant-avatars')
+      //   .upload(filePath, avatarFile, {
+      //     cacheControl: '3600',
+      //     upsert: false,
+      //     onUploadProgress: (progress) => {
+      //       const percent = Math.round((progress.loaded / progress.total) * 100);
+      //       setUploadProgress(percent);
+      //     },
+      //   });
 
-      if (error) {
-        throw error;
-      }
+      // if (error) {
+      //   throw error;
+      // }
 
       // Get public URL
       const { data: { publicUrl } } = supabase.storage

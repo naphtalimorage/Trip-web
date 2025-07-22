@@ -77,21 +77,21 @@ const RegistrationPage = () => {
       const fileName = `${Date.now()}-${Math.random().toString(36).substring(2, 15)}.${fileExt}`;
       const filePath = `avatars/${fileName}`;
 
-      // Upload to Supabase Storage
-      const { error } = await supabase.storage
-        .from('participant-avatars')
-        .upload(filePath, avatarFile, {
-          cacheControl: '3600',
-          upsert: false,
-          onUploadProgress: (progress) => {
-            const percent = Math.round((progress.loaded / progress.total) * 100);
-            setUploadProgress(percent);
-          },
-        });
-
-      if (error) {
-        throw error;
-      }
+      // // Upload to Supabase Storage
+      // const { error } = await supabase.storage
+      //   .from('participant-avatars')
+      //   .upload(filePath, avatarFile, {
+      //     cacheControl: '3600',
+      //     upsert: false,
+      //     onUploadProgress: (progress) => {
+      //       const percent = Math.round((progress.loaded / progress.total) * 100);
+      //       setUploadProgress(percent);
+      //     },
+      //   });
+      // //
+      // if (error) {
+      //   throw error;
+      // }
 
       // Get public URL
       const { data: { publicUrl } } = supabase.storage
