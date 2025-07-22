@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { UserPlus, CheckCircle, AlertCircle, DollarSign, Clock, Upload, Image } from 'lucide-react';
+import { UserPlus, CheckCircle, AlertCircle, DollarSign, Clock } from 'lucide-react';
 import { participantService } from '../services/participantService';
 import { RegistrationFormData } from '../types';
 import { isSupabaseConfigured, supabase } from '../lib/supabase';
@@ -23,42 +23,42 @@ const RegistrationPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
-  const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
-  const [isUploading, setIsUploading] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState(0);
+  // const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
+  // const [isUploading, setIsUploading] = useState(false);
+  // const [uploadProgress, setUploadProgress] = useState(0);
   const [uploadError, setUploadError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0] || null;
-    setUploadError(null);
-
-    if (file) {
-      // Validate file type
-      if (!file.type.startsWith('image/')) {
-        setUploadError('Please upload an image file');
-        return;
-      }
-
-      // Validate file size (max 5MB)
-      if (file.size > 5 * 1024 * 1024) {
-        setUploadError('Image size should be less than 5MB');
-        return;
-      }
-
-      setAvatarFile(file);
-
-      // Create preview
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setAvatarPreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    } else {
-      setAvatarFile(null);
-      setAvatarPreview(null);
-    }
-  };
+  // const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = e.target.files?.[0] || null;
+  //   setUploadError(null);
+  //
+  //   if (file) {
+  //     // Validate file type
+  //     if (!file.type.startsWith('image/')) {
+  //       setUploadError('Please upload an image file');
+  //       return;
+  //     }
+  //
+  //     // Validate file size (max 5MB)
+  //     if (file.size > 5 * 1024 * 1024) {
+  //       setUploadError('Image size should be less than 5MB');
+  //       return;
+  //     }
+  //
+  //     setAvatarFile(file);
+  //
+  //     // Create preview
+  //     const reader = new FileReader();
+  //     reader.onloadend = () => {
+  //       setAvatarPreview(reader.result as string);
+  //     };
+  //     reader.readAsDataURL(file);
+  //   } else {
+  //     setAvatarFile(null);
+  //     setAvatarPreview(null);
+  //   }
+  // };
 
   /**
    * Uploads the selected avatar file to Supabase Storage
@@ -69,8 +69,8 @@ const RegistrationPage = () => {
     if (!avatarFile || !isSupabaseConfigured()) return null;
 
     try {
-      setIsUploading(true);
-      setUploadProgress(0);
+      // setIsUploading(true);
+      // setUploadProgress(0);
 
       // Create a unique filename
       const fileExt = avatarFile.name.split('.').pop();
@@ -104,7 +104,7 @@ const RegistrationPage = () => {
       setUploadError('Failed to upload avatar. Please try again.');
       return null;
     } finally {
-      setIsUploading(false);
+      // setIsUploading(false);
     }
   };
 
@@ -162,8 +162,8 @@ const RegistrationPage = () => {
         reset();
         // Reset avatar state
         setAvatarFile(null);
-        setAvatarPreview(null);
-        setUploadProgress(0);
+        // setAvatarPreview(null);
+        // setUploadProgress(0);
         if (fileInputRef.current) {
           fileInputRef.current.value = '';
         }
